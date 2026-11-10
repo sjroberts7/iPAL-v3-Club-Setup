@@ -1,0 +1,144 @@
+export type PriceOption = { enabled: boolean; value: string };
+export type Pricing = {
+  type: "Per Session" | "As a Whole";
+  standard: string;
+  weekly: PriceOption;
+  monthly: PriceOption;
+  within: PriceOption & { days: string };
+  members: PriceOption;
+};
+export type Availability = {
+  mode: "all" | "weekdays" | "dates";
+  weekdays: number[];
+  dates: string[];
+};
+export type AgeLimit = {
+  id: string;
+  min: string;
+  max: string;
+  capacity: string;
+};
+export type Capacity = {
+  all: string;
+  custom: boolean;
+  weekdays: Record<string, string>;
+  dates: Record<string, string>;
+  ages: AgeLimit[];
+};
+export type Fee = { id: string; delay: string; amount: string };
+export type Session = {
+  id: string;
+  name: string;
+  start: string;
+  end: string;
+  live: boolean;
+  pricing: Pricing;
+  availability: Availability;
+  capacity: Capacity;
+  fees: Fee[];
+  group: string;
+};
+export type Extra = {
+  id: string;
+  name: string;
+  live: boolean;
+  pricing: Pricing;
+};
+export type Discount = {
+  id: string;
+  type: "promo" | "amount" | "sibling";
+  value: string;
+  code: string;
+  threshold: string;
+  siblings: string;
+  perCustomer: string;
+  total: string;
+  start: string;
+  end: string;
+  expanded: boolean;
+};
+export type Upload = { id: string; name: string; data: string; type: string };
+export type Tile = {
+  name: string;
+  image: string;
+  live: string;
+  offline: string;
+  archive: string;
+  shadow: boolean;
+  background: string;
+  color: string;
+};
+export type Club = {
+  id: string;
+  name: string;
+  description: string;
+  bookingType: string;
+  location: string;
+  minimum: string;
+  cancellations: boolean;
+  cancellationPeriod: string;
+  waiting: boolean;
+  autoInvite: boolean;
+  trials: boolean;
+  free: boolean;
+  attending: string;
+  membersOnly: boolean;
+  membership: string;
+  private: boolean;
+  attendees: string[];
+  tile: Tile;
+  dates: string[];
+  weekdays: number[];
+  sessions: Session[];
+  extras: Extra[];
+  unlimited: boolean;
+  groupSignature: string;
+  payments: {
+    card: boolean;
+    monthly: boolean;
+    outstanding: boolean;
+    taxFree: boolean;
+    wallet: boolean;
+    whenDue: boolean;
+    partial: boolean;
+    equal: boolean;
+    category: string;
+    account: string;
+  };
+  restrictions: {
+    age: boolean;
+    min: string;
+    max: string;
+    location: boolean;
+    locations: string[];
+    year: boolean;
+    years: string[];
+    class: boolean;
+    classes: string[];
+    child: boolean;
+    children: string[];
+  };
+  discounts: Discount[];
+  email: {
+    html: string;
+    attachments: Upload[];
+    registers: boolean;
+    addresses: string;
+    time: string;
+    fields: string[];
+    password: string;
+    confirm: string;
+  };
+  createdAt?: string;
+  archived?: boolean;
+};
+export type AppState = {
+  version: 1;
+  view: "clubs" | "wizard" | "success" | "view";
+  step: number;
+  completed: number[];
+  draft: Club;
+  clubs: Club[];
+  selectedId: string | null;
+  membershipEnabled: boolean;
+};
